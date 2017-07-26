@@ -1,0 +1,16 @@
+<h2>My Users</h2>
+<ul class="usaideoir">
+  <li *ngFor="let u of usaideoir"
+    [class.selected]="u === teibi"
+    (click)="onSelect(u)">
+    <span class="badge">{{u.id}}</span>
+    {{u.name}}
+  </li>
+</ul>
+
+<div *ngIf="teibi">
+  <h2>
+    {{teibi.name | uppercase}} is my user
+  </h2>
+  <button (click)="gotoProfile()">View Details</button>
+</div>

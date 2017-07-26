@@ -1,0 +1,21 @@
+
+<div class="grid grid-pad">
+  <a *ngFor="let n of newnouns"   class="col-1-4">
+    <div class="module noun">
+      <h4>{{n.word}}</h4>
+    </div>
+  </a>
+  <div>{{newnouns}}</div>
+  <div ng-repeat="(key, value) in newnouns">{{key}} => {{value}}</div>
+</div>
+
+
+<tbody>
+      <tr *ngFor="let noun of newnouns">
+        <td>{{noun.gender}}</td>
+        <td>{{noun.word}}</td>
+        <td>
+
+        </td>
+      </tr>
+    </tbody>

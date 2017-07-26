@@ -1,0 +1,20 @@
+<!--
+<div class="grid grid-pad">
+  <a *ngFor="let n of nouns"   class="col-1-4">
+    <div class="module noun">
+      <h4>{{n.name}}</h4>
+    </div>
+  </a>
+</div> -->
+
+
+  <div>
+
+  <label>Text: </label>
+  <textarea [(ngModel)]="newword" (ngModelChange)="sendIoMessage()" class="userInput" rows="10" cols="50">
+
+</textarea>
+  <div>
+    <!-- <button (click)="getText(newword)">Send</button> -->
+  </div>
+</div>
