@@ -34,6 +34,7 @@ export class SocketClass {
 
   compareText = () => {
     let text = this.text;
+    this.text = this.text.replace(/['"]+/g, '');
     let tokenizer = this.text.split(/\s+/);
     let returnMsg = '';
     let passIo = this.io;
@@ -66,13 +67,17 @@ export class SocketClass {
           if(myword == lastWord && vowelCheck && gender == 'male'){
 
             var secondLastWord = tokenizer[tokenizer.length-2];
+
             if(secondLastWord == 'an'){
 
               tokenizer[tokenizer.length-1] = 't-' + tokenizer[tokenizer.length-1];
-              returnMsg= tokenizer.join(' ');
-              passIo.emit('returnmessage', returnMsg);
-            }
 
+              returnMsg= tokenizer.join(' ');
+              returnMsg = returnMsg.replace(/['"]+/g, '');
+
+              passIo.emit('returnmessage', returnMsg);
+
+            }
           }
         }
 

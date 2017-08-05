@@ -51,8 +51,8 @@ export class UserInputComponent implements OnInit {
    }
 
    private initIoConnection(): void {
-     this.ioConnection = this.socketService.get().subscribe((text: Nouns) => {
-       this.nouns.push(text);
+     this.ioConnection = this.socketService.get().subscribe((text: String) => {
+       this.newword = text;
      });
    }
 
