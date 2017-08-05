@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 
 const nounSchema = new mongoose.Schema({
-  word: String,
+  word: {type: String, text: true},
   gender: String
 });
 

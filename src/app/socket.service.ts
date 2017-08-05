@@ -26,15 +26,17 @@ export class SocketService {
     this.socket.emit('text', text);
   }
 
+
   public get() {
     let observable = new Observable(observer => {
-      this.socket.on('message', (data) => {
+      this.socket.on('returnmessage', (data) => {
         observer.next(data);
+      //  console.log(data);
       });
       return () => {
-        this.socket.disconnect();
-      };
-    });
-    return observable;
+      this.socket.disconnect();
+    };
+  });
+  return observable;
   }
 }
