@@ -31,7 +31,6 @@ export class SocketService {
     let observable = new Observable(observer => {
       this.socket.on('returnmessage', (data) => {
         observer.next(data);
-      //  console.log(data);
       });
       return () => {
       this.socket.disconnect();
