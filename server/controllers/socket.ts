@@ -17,6 +17,7 @@ export class SocketClass {
       console.log('connected client on port %s.', port);
       socket.on('text', (text) => {
         this.text = JSON.stringify(text);
+        console.log(this.text);
       // console.log('[server](text): %s', JSON.stringify(text));
         this.compareText();
       //  io.emit('text',text);
@@ -35,7 +36,10 @@ export class SocketClass {
   compareText = () => {
     let text = this.text;
     this.text = this.text.replace(/['"]+/g, '');
-    let tokenizer = this.text.split(/\s+/);
+    this.text = this.text.replace(/\\n/g, ' ');
+    console.log(this.text);
+    let tokenizer = this.text.split(' ');
+    console.log(tokenizer);
     let returnMsg = '';
     let passIo = this.io;
     let arr = [];
@@ -74,7 +78,7 @@ export class SocketClass {
 
               returnMsg= tokenizer.join(' ');
               returnMsg = returnMsg.replace(/['"]+/g, '');
-
+              console.log(returnMsg);
               passIo.emit('returnmessage', returnMsg);
 
             }

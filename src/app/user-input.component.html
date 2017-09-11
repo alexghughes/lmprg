@@ -7,14 +7,17 @@
   </a>
 </div> -->
 
+  <!-- <div class="cntr-div">
 
-  <div>
-
-  <label>Text: </label>
-  <textarea [(ngModel)]="newword" (ngModelChange)="sendIoMessage()" class="userInput" rows="10" cols="50">
+  <textarea [(ngModel)]="newword" (ngModelChange)="sendIoMessage()" class="user-input" id="hlght-ta" rows="10" cols="50">
 
 </textarea>
-  <div>
-    <!-- <button (click)="getText(newword)">Send</button> -->
+
+</div> -->
+
+<div class="container">
+  <div class="backdrop">
+    <div class="highlights"></div>
   </div>
+  <textarea [(ngModel)]="newword" (ngModelChange)="sendIoMessage()" class="user-input"></textarea>
 </div>
