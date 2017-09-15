@@ -61,6 +61,8 @@ body {
 .backdrop {
   position: absolute;
   z-index: 1;
+  width: 150%;
+  height: 300%;
   border: 2px solid #685972;
   background-color: #fff;
   overflow: auto;
@@ -77,6 +79,8 @@ body {
 textarea {
   display: block;
   white-space: pre;
+  width: 150%;
+  height: 300%;
   position: absolute;
   z-index: 2;
   margin: 0;
@@ -129,6 +133,5 @@ textarea:focus, button:focus {
 
 mark {
   border-radius: 3px;
-
   background-color: blue;
 }

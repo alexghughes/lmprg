@@ -55,86 +55,110 @@ export class UserInputComponent implements OnInit {
 
    private initIoConnection(): void {
      this.ioConnection = this.socketService.get().subscribe((returntext: String) => {
-var flag = true;
-var myString = this.newword.substring(this.newword.lastIndexOf(" ")+1);
-var myString2 = returntext.substring(returntext.lastIndexOf(" ")+1);
+
+       var myString = this.newword.substring(this.newword.lastIndexOf(" ")+1);
+       var myString2 = returntext.substring(returntext.lastIndexOf(" ")+1);
 
 //this.newword = this.newword.substring(0, myString);
-this.newword = this.newword.replace(/\w+[.!?]?$/,myString2);
+       this.newword = this.newword.replace(/\w+[.!?]?$/,myString2);
+
+       var $container = $('.container');
+       var $backdrop = $('.backdrop');
+       var $highlights = $('.highlights');
+       var $textarea = $('textarea');
+       var $toggle = $('button');
+       var text = '';
+
+       // yeah, browser sniffing sucks, but there are browser-specific quirks to handle that are not a matter of feature detection
+       var ua = window.navigator.userAgent.toLowerCase();
+       var isIE = !!ua.match(/msie|trident\/7|edge/);
+       var isWinPhone = ua.indexOf('windows phone') !== -1;
+       var isIOS = !isWinPhone && !!ua.match(/ipad|iphone|ipod/);
 
 
 
-var $container = $('.container');
-var $backdrop = $('.backdrop');
-var $highlights = $('.highlights');
-var $textarea = $('textarea');
-var $toggle = $('button');
+       function applyHighlights(text, s) {
 
-// yeah, browser sniffing sucks, but there are browser-specific quirks to handle that are not a matter of feature detection
-var ua = window.navigator.userAgent.toLowerCase();
-var isIE = !!ua.match(/msie|trident\/7|edge/);
-var isWinPhone = ua.indexOf('windows phone') !== -1;
-var isIOS = !isWinPhone && !!ua.match(/ipad|iphone|ipod/);
+         function reverse(s) {
+           var o = '';
+           for (var i = s.length - 1; i >= 0; i--)
+            o += s[i];
+            return o;
+          }
+       //console.log(myString);
+         var index = text.lastIndexOf(myString2);
+         //console.log(index);
 
-function applyHighlights(text) {
-//console.log(myString);
-  console.log(flag);
-if(flag){
-  text = text
-    .replace(/\n$/g, '\n\n')
-    .replace(/\w+[.!?]?$/, '<mark>$&</mark>');
-}
-  if (isIE) {
-    // IE wraps whitespace differently in a div vs textarea, this fixes it
-    text = text.replace(/ /g, ' <wbr>');
-  }
+         var rev = reverse(text);
+         var revMark = reverse('<mark>&$</mark>');
+         var strngRev = reverse(myString2);
+         rev = rev
 
-  return text;
-}
+           .replace(strngRev, revMark);
 
-function handleInput() {
+          rev = reverse(rev);
+          text = rev;
 
-  var text = $textarea.val();
-  var highlightedText = applyHighlights(text);
-  $highlights.html(highlightedText);
-//  console.log(highlightedText);
-}
 
-function handleScroll() {
-  var scrollTop = $textarea.scrollTop();
-  $backdrop.scrollTop(scrollTop);
 
-  var scrollLeft = $textarea.scrollLeft();
-  $backdrop.scrollLeft(scrollLeft);
-}
+        //  text = text
+        //    .replace(/\n$/g, '\n\n')
+        //    .replace(myString2, '<mark>$&</mark>');
+        //  //  .replace(/\w+[.!?]?$/, '<mark>$&</mark>');
 
-function fixIOS() {
-  // iOS adds 3px of (unremovable) padding to the left and right of a textarea, so adjust highlights div to match
-  $highlights.css({
-    'padding-left': '+=3px',
-    'padding-right': '+=3px',
+         return text;
+       }
 
-  });
-}
 
-function bindEvents() {
-  $textarea.on({
-    'input': handleInput,
-    'scroll': handleScroll
-  });
+       function handleInput(s) {
 
-  $toggle.on('click', function() {
-    $container.toggleClass('perspective');
-  });
-}
+         var text = $textarea.val();
+         var highlightedText = applyHighlights(text,s);
+         $highlights.html(highlightedText);
+       //  console.log(highlightedText);
+       }
 
-if (isIOS) {
-  fixIOS();
-}
-bindEvents();
-handleInput();
-flag = false;
+       function handleScroll() {
+         var scrollTop = $textarea.scrollTop();
+         $backdrop.scrollTop(scrollTop);
+
+         var scrollLeft = $textarea.scrollLeft();
+         $backdrop.scrollLeft(scrollLeft);
+       }
+
+       function fixIOS() {
+         // iOS adds 3px of (unremovable) padding to the left and right of a textarea, so adjust highlights div to match
+         $highlights.css({
+           'padding-left': '+=3px',
+           'padding-right': '+=3px',
+
+         });
+       }
+
+       function bindEvents() {
+         $textarea.on({
+           'input': handleInput,
+           'scroll': handleScroll
+         });
+
+         $toggle.on('click', function() {
+           $container.toggleClass('perspective');
+         });
+       }
+
+       if (isIOS) {
+         fixIOS();
+       }
+
+       bindEvents();
+       handleInput(myString2);
+
      });
+
+
+
+
+
 
    }
 
