@@ -62,12 +62,14 @@ export class UserInputComponent implements OnInit {
 //this.newword = this.newword.substring(0, myString);
        this.newword = this.newword.replace(/\w+[.!?]?$/,myString2);
 
+       var passtojqueryfunction = this.newword;
        var $container = $('.container');
        var $backdrop = $('.backdrop');
        var $highlights = $('.highlights');
        var $textarea = $('textarea');
        var $toggle = $('button');
        var text = '';
+       var backSpaceEvent = false;
 
        // yeah, browser sniffing sucks, but there are browser-specific quirks to handle that are not a matter of feature detection
        var ua = window.navigator.userAgent.toLowerCase();
@@ -79,6 +81,7 @@ export class UserInputComponent implements OnInit {
 
        function applyHighlights(text, s) {
 
+
          function reverse(s) {
            var o = '';
            for (var i = s.length - 1; i >= 0; i--)
@@ -87,18 +90,27 @@ export class UserInputComponent implements OnInit {
           }
        //console.log(myString);
          var index = text.lastIndexOf(myString2);
+         var check = text;
          //console.log(index);
 
          var rev = reverse(text);
-         var revMark = reverse('<mark>&$</mark>');
-         var strngRev = reverse(myString2);
-         rev = rev
 
-           .replace(strngRev, revMark);
+         var revMark = reverse('<mark style="background-color:#b1d5e5;">&$</mark>');
+
+         var strngRev = reverse(myString2);
+         if(!backSpaceEvent){
+           rev = rev.replace(strngRev, revMark);
+         }
 
           rev = reverse(rev);
+
           text = rev;
 
+          $('html').keyup(function(e){
+            if(e.keyCode == 8) {
+              backSpaceEvent = true;
+            }
+          });
 
 
         //  text = text

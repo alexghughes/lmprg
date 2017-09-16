@@ -132,6 +132,6 @@ textarea:focus, button:focus {
 }
 
 mark {
-  border-radius: 3px;
+  border-radius: 20px;
   background-color: blue;
 }
