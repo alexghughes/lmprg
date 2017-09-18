@@ -57,22 +57,12 @@ export class UserInputComponent implements OnInit {
   var $highlights = $('.highlights');
 
      this.ioConnection = this.socketService.get().subscribe((returntext: String) => {
-       console.log('in ioConnection');
-       //$highlights.stop();
-      // $highlights.removeAttr('style');
-    //   var $highlights = $('.highlights');
-      //  $highlights.fadeTo("slow", 0.1);
-
-      //  $highlights = $('.highlights');
-    //  $highlights.stop();
-
+       var count = 0;
 
        var myString = this.newword.substring(this.newword.lastIndexOf(" ")+1);
        var myString2 = returntext;
 
-       //this.newword = this.newword.substring(0, myString);
        this.newword = this.newword.replace(/\w+[.!?]?$/,myString2);
-
 
        var passtojqueryfunction = this.newword;
        var $container = $('.container');
@@ -82,7 +72,7 @@ export class UserInputComponent implements OnInit {
        var $toggle = $('button');
        var text = '';
        var backSpaceEvent = false;
-       var revMark = reverse('<mark style="background-color:#feff60; border-radius: 25px; width: 200px">&$</mark>');
+       var revMark = reverse('<mark style="background-color:#FBFF2C; border-radius: 10px; ">&$</mark>');
        //$("#myMark").css("background-color", "yellow");
        // yeah, browser sniffing sucks, but there are browser-specific quirks to handle that are not a matter of feature detection
        var ua = window.navigator.userAgent.toLowerCase();
@@ -144,12 +134,17 @@ export class UserInputComponent implements OnInit {
 
        var myString2 = returntext;
       //  setTimeout(function(){
+
+          count ++;
          if(txtareaVal == myString){
+           if(count === 1){
+
            $highlights.animate({opacity: 100}, 0);
-           setTimeout(function(){
+
              $highlights.animate({opacity: 0}, 1000);
 
-           }, 0);
+
+         }
          }
       //  }, 500);
 
