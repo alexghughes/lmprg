@@ -62,7 +62,7 @@ body {
 .backdrop {
   position: absolute;
   z-index: 1;
-  width: 150%;
+  width: 130%;
   height: 300%;
   -webkit-border-radius: 8px;
     -moz-border-radius:8px;
@@ -72,7 +72,10 @@ body {
   overflow: auto;
   pointer-events: none;
   border-radius: 5;
-  transition: transform 1s;
+  margin-top: 8%;
+  margin-left: -10%;
+
+
 }
 
 .highlights {
@@ -82,13 +85,13 @@ body {
 }
 
 textarea {
+
   display: block;
   white-space: pre;
-  width: 150%;
+  width: 130%;
   height: 300%;
   position: absolute;
   z-index: 2;
-  margin: 0;
   border: 2px solid #74637f;
   -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
@@ -97,49 +100,49 @@ textarea {
   background-color: transparent;
   overflow: auto;
   resize: none;
-  transition: transform 1s;
+  margin-top: 8%;
+  margin-left: -10%;
+
 
 }
 
-
-
-button {
-  display: block;
-  width: 300px;
-  margin: 30px auto 0;
-  padding: 10px;
-  border: none;
-  border-radius: 6px;
-  color: #fff;
-  background-color: #74637f;
-  font: 18px 'Opens Sans', sans-serif;
-  letter-spacing: 1px;
-  appearance: none;
-  cursor: pointer;
-}
-
-.perspective .backdrop {
-  transform:
-    perspective(1500px)
-    translateX(-125px)
-    rotateY(45deg)
-    scale(.9);
-}
-
-.perspective textarea {
-  transform:
-    perspective(1500px)
-    translateX(155px)
-    rotateY(45deg)
-    scale(1.1);
-}
 
 textarea:focus, button:focus {
   outline: none;
-  box-shadow: 0 0 0 2px #87CEFA;
+
 }
 
-mark {
-  border-radius: 20px;
-  background-color: blue;
+.column {
+    float: left;
+    padding: 10px;
+    height: 300px; /* Should be removed. Only for demonstration */
 }
+
+.left {
+  width: 20%;
+
+  margin-top: 3%;
+  margin-left: 5%;
+  position: relative;
+  overflow: auto;
+}
+
+
+
+.right {
+  width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+#toggle {
+    width: auto;
+    height: auto;
+    background: #ccc;
+    display: none;
+  }

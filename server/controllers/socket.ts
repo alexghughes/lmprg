@@ -17,6 +17,7 @@ export class SocketClass {
       console.log('connected client on port %s.', port);
       socket.on('text', (text) => {
         this.text = JSON.stringify(text);
+
       // console.log('[server](text): %s', JSON.stringify(text));
         this.compareText();
       //  io.emit('text',text);
@@ -78,7 +79,11 @@ export class SocketClass {
               returnMsg= tokenizer.join(' ');
               returnMsg = returnMsg.replace(/['"]+/g, '');
               returnMsg = returnMsg.substring(returnMsg.lastIndexOf(" ")+1);
-              passIo.emit('returnmessage', returnMsg);
+
+                let rule = 'masc-noun-vowel';
+              let returnObj = {'text': returnMsg, 'rule': rule};
+
+              passIo.emit('returnmessage', returnObj);
 
             }
           }

@@ -14,10 +14,43 @@
 </textarea>
 
 </div> -->
+<!-- <div *ngIf="visibility == 'shown'" id="popup" >
+<ng-content></ng-content>
+Can you see me?
+</div> -->
+<div class="row">
 
+  <div class = "column left" >
+
+    <div id="toggle" (click)="openDiv()">Cén fáth / Why?
+  {{myModel}}
+</div>
+<!-- <mat-expansion-panel  id="panel">
+  <mat-expansion-panel-header id="panel-header">
+    <mat-panel-title *ngIf = "panelValue">
+       Cén fáth? / Why?
+    </mat-panel-title>
+    <mat-panel-description>
+
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <p>This is the primary content of the panel.</p>
+
+</mat-expansion-panel> -->
+
+
+</div>
+<div class="column right">
 <div class="container">
+
   <div class="backdrop">
     <div class="highlights"></div>
-  </div>
+
+</div>
+
   <textarea spellcheck="false" [(ngModel)]="newword" (ngModelChange)="sendIoMessage()" class="user-input"></textarea>
+
+</div>
+</div>
 </div>

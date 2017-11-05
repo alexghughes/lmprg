@@ -1,3 +1,5 @@
+
+
 h1 {
   font-size: 1.2em;
   color: #999;
@@ -19,10 +21,41 @@ nav a {
 nav a:visited, a:link {
   color: #607D8B;
 }
-nav a:hover {
-  color: #039be5;
-  background-color: #CFD8DC;
-}
+
 nav a.active {
   color: #039be5;
+}
+
+md-toolbar {
+  background-color: #607D8B;
+  height:64px;
+  border-radius: 5px;
+}
+
+span a {
+  padding:40px 40px 10px 10px;
+  color: white;
+  font-family: sans-serif;
+   font-size: 1em;
+  text-decoration: none;
+}
+
+span a:hover {
+  color:  #EEE;
+
+}
+
+
+img {
+  margin-top: 11%;
+  color:white;
+}
+
+.router-links {
+  /*display: block;*/
+  margin-top: 5%;
+}
+
+#myRoutes {
+  margin-left: 5%;
 }

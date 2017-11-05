@@ -30,12 +30,17 @@ export class SocketService {
   public get() {
     let observable = new Observable(observer => {
       this.socket.on('returnmessage', (data) => {
+      //  console.log(rule);
         observer.next(data);
+      //  console.log(observer);
       });
       return () => {
-      this.socket.disconnect();
+        //something about it returning nothing
+      //this.socket.disconnect();
     };
   });
+
   return observable;
+
   }
 }

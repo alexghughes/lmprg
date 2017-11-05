@@ -9,7 +9,7 @@ import { NounComponent }  from './noun.component';
 import { MessageComponent }  from './message.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: '/input', pathMatch: 'full' },
   { path: 'dashboard',  component: DashboardComponent },
   { path: 'profile/:id', component: UserProfileComponent },
   { path: 'users',     component: UserComponent },
