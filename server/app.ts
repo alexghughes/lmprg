@@ -14,8 +14,6 @@ import { Message } from './models';
 
 import { SocketClass } from './controllers';
 
-
-
 class Server {
 
   public static readonly PORT = 3000;
@@ -39,6 +37,8 @@ class Server {
     this.listen();
     this.setRoutes();
     this.mongoConnect();
+
+
   }
 
   private createApp(): void {
@@ -56,7 +56,6 @@ class Server {
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(morgan('dev'));
-
 
   }
 
@@ -98,8 +97,10 @@ class Server {
   }
 
   private setRoutes(): void {
-    setRoutes(this.app);
+   setRoutes(this.app);
   }
+
+
 
 
 }

@@ -1,4 +1,4 @@
 export class Nouns {
-  word: string;
+  default: string;
   gender: string;
 }

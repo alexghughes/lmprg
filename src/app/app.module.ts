@@ -13,6 +13,7 @@ import { UserComponent } from './user.component';
 import { DashboardComponent } from './dashboard.component';
 import { UserService } from './user.service';
 import { NounService } from './noun.service';
+import { RulesService } from './rules.service';
 import { UserInputComponent }   from './user-input.component';
 import { RouterModule }   from '@angular/router';
 import { AppRoutingModule }     from './app-routing.module';
@@ -40,7 +41,7 @@ import { SocketService } from './socket.service';
     AngularMaterialModule
 
   ],
-  providers: [NounService, UserService, SocketService],
+  providers: [NounService, UserService, RulesService, SocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

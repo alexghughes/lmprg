@@ -4,6 +4,7 @@ import { Nouns } from './nouns';
 import { Http } from '@angular/http';
 //import { NOUNS } from './mock-nouns';
 import { NounService } from './noun.service';
+import { RulesService } from './rules.service';
 import { SocketService } from './socket.service';
 import { keyframes } from '@angular/animations';
 import {MatExpansionModule} from '@angular/material';
@@ -27,10 +28,11 @@ export class UserInputComponent implements OnInit {
   newword: any;
   panelValue: boolean;
   flag: boolean;
-  myModel:String;
+  rule:string;
+  myModel:string;
   private ioConnection: any;
 
-  constructor(private nounService: NounService, private http: Http, private socketService: SocketService, public panel: MatExpansionModule) { }
+  constructor(private nounService: NounService, private http: Http, private socketService: SocketService, private rulesService: RulesService) { }
 
   ngOnInit(): void {
     // this.panelValue = true;
@@ -57,13 +59,22 @@ export class UserInputComponent implements OnInit {
   }
 
   sendIoMessage(): void {
+    var myWord = this.newword.slice(-1);
 
     this.socketService.sendIoMessage(this.newword);
+
   }
 
   openDiv(): void {
-    console.log('hi');
-    this.myModel = 'dfkdsdskldskl kldksllksdkldsdklsdsklds';
+    let newRule = '';
+    this.rulesService.getRule(this.rule).subscribe(
+      data => this.myModel = data.text,
+      error => console.log(error)
+
+      //use DomSanitizer to trust as HTML
+
+    );;
+  //  this.myModel = 'dfkdsdskldskl kldksllksdkldsdklsdsklds';
   }
 
 
@@ -76,9 +87,11 @@ export class UserInputComponent implements OnInit {
     //var panel = document.getElementById('mypanel');
     //$( '#toggle' ).slideDown().addClass('visible');
     //var something =  new panel<void>()
+
     this.ioConnection = this.socketService.get().subscribe((returntext: any) => {
       this.myModel = '';
-      console.log(returntext.rule);
+
+      this.rule = returntext.rule;
 
       this.panelValue = true;
       //$( '#toggle' ).toggle( "slide" ).addClass('visible');
@@ -157,10 +170,15 @@ export class UserInputComponent implements OnInit {
       //this.panelValue = true;
       var count = 0;
       var getPanelValue = this.panelValue;
-      var myString = this.newword.substring(this.newword.lastIndexOf(" ") + 1);
-      var myString2 = returntext.text;
+        var myString = this.newword.slice(0, -1);
+      myString = myString.substring(myString.lastIndexOf(" "));
 
+    myString = myString.substr(1);
+      var myString2 = returntext.text;
+    // console.log(myString2);
+      this.newword = this.newword.slice(0, -1);
       this.newword = this.newword.replace(/\w+[.!?]?$/, myString2);
+      this.newword = this.newword + " ";
 
       var passtojqueryfunction = this.newword;
       var $container = $('.container');
