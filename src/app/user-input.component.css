@@ -65,8 +65,8 @@ body {
   width: 130%;
   height: 300%;
   -webkit-border-radius: 8px;
-    -moz-border-radius:8px;
-    border-radius: 8px;
+  -moz-border-radius:8px;
+  border-radius: 8px;
   border: 2px solid #685972;
   background-color: #fff;
   overflow: auto;
@@ -87,21 +87,21 @@ body {
 textarea {
 
   display: block;
-  white-space: pre;
   width: 130%;
   height: 300%;
   position: absolute;
   z-index: 2;
   border: 2px solid #74637f;
   -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-overflow-style: none;
+  border-radius: 8px;
   color: #444;
   background-color: transparent;
-  overflow: auto;
-  resize: none;
   margin-top: 8%;
   margin-left: -10%;
+  overflow: hidden;
+  resize: vertical;
 
 
 }

@@ -73,13 +73,14 @@ export class SocketClass {
 
           let myword = res["default"];
           let gender = res["gender"];
+        //  console.log(myword);
 
-          let vowels = ["a","e","i","o","u","ú"];
-
-          let regex = /\b[aeiouAEIOUáéíóúÁÉÍÓÚ]/g;
-          let vowelCheck = regex.test(myword);
-
-          if(myword == lastWord &&  vowelCheck && gender == 'masc'){
+          let regex = /\b[aeiouAEIOU]/g;
+          let removeFadas = cleanUpSpecialChars(myword);
+          //console.log(myword);
+          let vowelCheck = regex.test(removeFadas);
+        // console.log(vowelCheck);
+          if(myword == lastWord && vowelCheck && gender == 'masc'){
 
             var thirdLastWord = tokenizer[tokenizer.length-3];
 
@@ -95,7 +96,6 @@ export class SocketClass {
 
                 let rule = 'masc-noun-vowel';
               let returnObj = {'text': returnMsg, 'rule': rule} ;
-            
               passIo.emit('returnmessage', returnObj);
 
             }
@@ -103,18 +103,18 @@ export class SocketClass {
         }
 
       })
-
-
-
-
-
-
-
-
+      function cleanUpSpecialChars(str)
+      {
+          str = str.replace(/[Á]/g,"A");
+          str = str.replace(/[á]/g,"a");
+          str = str.replace(/[É]/g,"E");
+          str = str.replace(/[Ú]/g,"U");
+          str = str.replace(/[ú]/g,"u");
+          str = str.replace(/[ú]/g,"u");
+          return str;
+      }
 
   }
-
-
 
 
 
