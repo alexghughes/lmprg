@@ -2,7 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Nouns } from './nouns';
 import { Http } from '@angular/http';
-//import { NOUNS } from './mock-nouns';
 import { NounService } from './noun.service';
 import { RulesService } from './rules.service';
 import { SocketService } from './socket.service';
@@ -126,7 +125,8 @@ export class UserInputComponent implements OnInit {
       var isWinPhone = ua.indexOf('windows phone') !== -1;
       var isIOS = !isWinPhone && !!ua.match(/ipad|iphone|ipod/);
       var txtareaVal = $textarea.val().substring($textarea.val().lastIndexOf(" ") + 1);
-
+      // var rect = document.getElementById('txtarea').getBoundingClientRect();
+      // console.log(rect.top, rect.right, rect.bottom, rect.left);
 
       function reverse(s) {
         var o = '';
@@ -191,21 +191,18 @@ export class UserInputComponent implements OnInit {
 
         }
 
-
-        //    }
-        //   this.panelValue = getPanelValue;
-        //  }, 500);
-
       }
-
 
       function handleScroll() {
         var scrollTop = $textarea.scrollTop();
         $backdrop.scrollTop(scrollTop);
 
+
         var scrollLeft = $textarea.scrollLeft();
         $backdrop.scrollLeft(scrollLeft);
-      }
+
+
+     }
 
       function fixIOS() {
         // iOS adds 3px of (unremovable) padding to the left and right of a textarea, so adjust highlights div to match
@@ -226,7 +223,6 @@ export class UserInputComponent implements OnInit {
           $container.toggleClass('perspective');
         });
 
-
       }
 
       if (isIOS) {
@@ -234,18 +230,14 @@ export class UserInputComponent implements OnInit {
       }
       $(document).ready(function() {
 
-
         bindEvents();
         handleInput(myString2);
+        handleScroll();
 
       });
 
     });
 
-
-
   }
-
-
 
 }

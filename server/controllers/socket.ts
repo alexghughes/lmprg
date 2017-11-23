@@ -15,13 +15,14 @@ export class SocketClass {
   init = (io, port) => {
     this.io = io;
     this.io.on('connect', (socket:any) => {
+
       console.log('connected client on port %s.', port);
       socket.on('text', (text) => {
 
         this.text = JSON.stringify(text);
 
-        this.compareText();
-      //  io.emit('text',text);
+        this.compareText(socket);
+
       });
 
       socket.on('disconnect', () => {
@@ -34,7 +35,7 @@ export class SocketClass {
 
   }
 
-  compareText = () => {
+  compareText = (socket) => {
     let text = this.text;
 
   //  this.text = this.text.replace(/['"]+/g, '');
@@ -54,16 +55,11 @@ export class SocketClass {
       lastWord =  secondLastWord + ' ';
     }
 
-     //lastWord = lastWord.replace(/['"]+/g, '');
 
       function getLastWord(words) {
 
         return words[words.length - 1];
       }
-//console.log(lastWord);
-  //console.log(lastWord);
- //console.log(lastWord);
-  //  lastWord = "iolar ";
     this.noun.findOne({"default": lastWord}, (err, docs) => {
       if (err) { return console.error(err); }
 
@@ -73,18 +69,16 @@ export class SocketClass {
 
           let myword = res["default"];
           let gender = res["gender"];
-        //  console.log(myword);
 
           let regex = /\b[aeiouAEIOU]/g;
           let removeFadas = cleanUpSpecialChars(myword);
-          //console.log(myword);
           let vowelCheck = regex.test(removeFadas);
-        // console.log(vowelCheck);
+
           if(myword == lastWord && vowelCheck && gender == 'masc'){
 
             var thirdLastWord = tokenizer[tokenizer.length-3];
-
-            if(thirdLastWord == 'an'){
+             var checkthirdlastWord = thirdLastWord.replace(/['"]+/g, '');
+            if(thirdLastWord == 'an' || thirdLastWord == '"an' || checkthirdlastWord){
 
               tokenizer[tokenizer.length-2] = 't-' + tokenizer[tokenizer.length-2];
               returnMsg = tokenizer.pop();
@@ -94,9 +88,10 @@ export class SocketClass {
               returnMsg = returnMsg.substring(returnMsg.lastIndexOf(' '));
               returnMsg = returnMsg.substr(1);
 
-                let rule = 'masc-noun-vowel';
+              let rule = 'masc-noun-vowel';
               let returnObj = {'text': returnMsg, 'rule': rule} ;
-              passIo.emit('returnmessage', returnObj);
+              socket.emit('returnmessage', returnObj);
+
 
             }
           }
