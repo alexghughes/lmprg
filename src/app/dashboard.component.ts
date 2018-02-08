@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Usaideoir } from './usaideoir';
-import { UserService } from './user.service';
+
 
 @Component({
   selector: 'my-dashboard',
@@ -8,13 +7,8 @@ import { UserService } from './user.service';
   styleUrls: ['./dashboard.component.css']
 })
 
-export class DashboardComponent implements OnInit {
-  usaideoir: Usaideoir[] = [];
+export class DashboardComponent {
 
-   constructor(private userService: UserService) { }
 
-   ngOnInit(): void {
-    this.userService.getUsers()
-      .then(usaideoir => this.usaideoir = usaideoir);
-  }
+
 }

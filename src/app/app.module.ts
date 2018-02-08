@@ -8,29 +8,29 @@ import { HttpModule } from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AngularMaterialModule} from './angular-material.module';
 import { AppComponent } from './app.component';
-import { UserProfileComponent } from './user-profile.component';
-import { UserComponent } from './user.component';
 import { DashboardComponent } from './dashboard.component';
-import { UserService } from './user.service';
 import { NounService } from './noun.service';
 import { RulesService } from './rules.service';
 import { UserInputComponent }   from './user-input.component';
 import { RouterModule }   from '@angular/router';
 import { AppRoutingModule }     from './app-routing.module';
 import { NounComponent }     from './noun.component';
-import { MessageComponent }     from './message.component';
 import { SocketService } from './socket.service';
+import { UserListComponent } from './user-list.component';
+import { UserComponent } from './user.component';
+import { DialogComponent } from './dialog.component';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
-
+import { ToastrModule } from 'ngx-toastr';
 @NgModule({
   declarations: [
     AppComponent,
-    UserProfileComponent,
+    UserListComponent,
     UserComponent,
     DashboardComponent,
     UserInputComponent,
     NounComponent,
-    MessageComponent
+    DialogComponent
   ],
   imports: [
     BrowserModule,
@@ -38,10 +38,17 @@ import { SocketService } from './socket.service';
     AppRoutingModule,
     HttpModule,
     BrowserAnimationsModule,
-    AngularMaterialModule
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-right'
+    }),
+     SimpleNotificationsModule.forRoot(),
+    AngularMaterialModule,
 
   ],
-  providers: [NounService, UserService, RulesService, SocketService],
+  entryComponents: [
+    DialogComponent,
+  ],
+  providers: [NounService, RulesService, SocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

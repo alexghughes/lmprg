@@ -73,7 +73,7 @@ body {
   overflow: auto;
   pointer-events: none;
   border-radius: 5;
-  margin-top: 8%;
+
   margin-left: -10%;
 
 
@@ -100,7 +100,7 @@ textarea {
   color: #444;
   text-align: justify;
   background-color: transparent;
-  margin-top: 8%;
+
   margin-left: -10%;
   overflow: hidden;
   resize: none;
@@ -123,8 +123,9 @@ textarea:focus, button:focus {
 .left {
   width: 20%;
 
-  margin-top: 3%;
+  margin-top: 4%;
   margin-left: 5%;
+  margin-right: 5%;
   position: relative;
   overflow: auto;
 }
@@ -133,6 +134,7 @@ textarea:focus, button:focus {
 
 .right {
   width: 50%;
+  margin: 2%;
 }
 
 /* Clear floats after the columns */
@@ -142,9 +144,40 @@ textarea:focus, button:focus {
     clear: both;
 }
 
+/* Clear floats after the columns */
+.column-left {
+
+}
+
 #toggle {
     width: auto;
     height: auto;
-    background: #ccc;
+    background: #99ccff;
+     border-radius: 3%;
     display: none;
   }
+
+  .simple-notification-wrapper{
+            margin-top: 500px !important;
+        }
+
+
+  /*.ng-tns-c4-0 {
+    height: 40px !important;
+    padding-top: 50% !important;
+  }*/
+
+
+  .tooltiptext {
+
+   width: 120px;
+   background-color: black;
+   color: #fff;
+   text-align: center;
+   padding: 5px 0;
+   border-radius: 6px;
+
+   /* Position the tooltip text - see examples below! */
+   position: absolute;
+   z-index: 1;
+}

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Nouns } from './nouns';
-import { Asal } from './mock-nouns';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { SocketService } from './socket.service'
@@ -20,10 +19,6 @@ export class NounService {
 
   getNouns(): Observable<any> {
     return this.http.get(this.nounsUrl + 'api/nouns').map(res=> res.json());
-  }
-
-  addNoun(noun): Observable<any> {
-    return this.http.post(this.nounsUrl + '/api/noun', JSON.stringify(Asal), this.options);
   }
 
   getNounsTest(): Observable<any> {

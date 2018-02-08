@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { Nouns } from './nouns';
 import { Http } from '@angular/http';
@@ -7,8 +6,12 @@ import { RulesService } from './rules.service';
 import { SocketService } from './socket.service';
 import { keyframes } from '@angular/animations';
 import {MatExpansionModule} from '@angular/material';
-
+import {MdDialog, MdDialogRef} from '@angular/material';
+import { DialogComponent } from './dialog.component';
 import { slideInOutAnimation } from './_animations/index';
+import { ToastrService } from 'ngx-toastr';
+import { NotificationsService } from 'angular2-notifications';
+
 
 import $ from 'jquery';
 
@@ -31,7 +34,7 @@ export class UserInputComponent implements OnInit {
   myModel: string;
   private ioConnection: any;
 
-  constructor(private nounService: NounService, private http: Http, private socketService: SocketService, private rulesService: RulesService) { }
+  constructor(private nounService: NounService, private http: Http, private socketService: SocketService, private rulesService: RulesService, private toastr: ToastrService, private notificationsService: NotificationsService, public dialog: MdDialog) { }
 
   ngOnInit(): void {
     // this.panelValue = true;
@@ -48,6 +51,13 @@ export class UserInputComponent implements OnInit {
 
   }
 
+  openDialog(): void {
+    let dialogRef = this.dialog.open(DialogComponent);
+   dialogRef.afterClosed().subscribe(result => {
+    // this.selectedOption = result;
+   });
+  }
+
   sendIoMessage(): void {
     var myWord = this.newword.slice(-1);
 
@@ -58,7 +68,9 @@ export class UserInputComponent implements OnInit {
   openDiv(): void {
     let newRule = '';
     this.rulesService.getRule(this.rule).subscribe(
-      data => this.myModel = data.text,
+      data =>  this.toastr.success('Hello world!', 'Toastr fun!'),
+
+      //this.myModel = data.text,
       error => console.log(error)
 
     );;
@@ -71,16 +83,25 @@ export class UserInputComponent implements OnInit {
     var $toggle = $('#toggle');
 
     this.ioConnection = this.socketService.get().subscribe((returntext: any) => {
+//this.toastr.info('Hello world!', 'Toastr fun!')
+      const toast = this.notificationsService.info(returntext.rule, 'Click to undo...', {
+
+      timeOut: 5000,
+      showProgressBar: true,
+      pauseOnHover: true,
+      clickToClose: true,
+      maxStack: 4
+    });
       this.myModel = '';
 
       this.panelValue = true;
-
-      if ($('#toggle').hasClass('visible')) {
-            $('#toggle').slideUp().removeClass('visible');
-            $('#toggle').slideDown().addClass('visible');
-      } else {
-        $('#toggle').slideDown().addClass('visible');
-      }
+      //
+      // if ($('#toggle').hasClass('visible')) {
+      //       $('#toggle').slideUp().removeClass('visible');
+      //       $('#toggle').slideDown().addClass('visible');
+      // } else {
+      //   $('#toggle').slideDown().addClass('visible');
+      // }
 
       this.rule = returntext.rule;
 
@@ -118,6 +139,8 @@ export class UserInputComponent implements OnInit {
       var $toggle = $('button');
       var text = '';
       var backSpaceEvent = false;
+
+
       var revMark = reverse('<mark style="background-color:#FBFF2C; border-radius: 10px; ">&$</mark>');
 
       var ua = window.navigator.userAgent.toLowerCase();
@@ -149,7 +172,7 @@ export class UserInputComponent implements OnInit {
 
         var index = rev.indexOf(strngRev);
 
-        if (!backSpaceEvent && index >= 0) {
+        if (!backSpaceEvent && index >= 0 && index < 5) {
 
           rev = rev.replace(strngRev, revMark);
 
@@ -184,16 +207,23 @@ export class UserInputComponent implements OnInit {
 
         count++;
 
+
         if (count === 1) {
 
           $highlights.animate({ opacity: 2000 }, 0);
           $highlights.animate({ opacity: 0 }, 2000);
 
+
         }
+
 
       }
 
       function handleScroll() {
+        // var enterKeyPress = false;
+
+
+
         var scrollTop = $textarea.scrollTop();
         $backdrop.scrollTop(scrollTop);
 
@@ -219,21 +249,27 @@ export class UserInputComponent implements OnInit {
           'scroll': handleScroll
         });
 
-        $toggle.on('click', function() {
-          $container.toggleClass('perspective');
-        });
-
       }
+
+
 
       if (isIOS) {
         fixIOS();
       }
+
       $(document).ready(function() {
 
         bindEvents();
-        handleInput(myString2);
         handleScroll();
+        handleInput(myString2);
 
+      });
+
+      $(document).keypress(function(event) {
+          var keycode = event.keyCode || event.which;
+          if(keycode == '13' || keycode == '8') {
+            backSpaceEvent = true;
+          }
       });
 
     });

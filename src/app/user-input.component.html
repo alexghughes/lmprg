@@ -18,10 +18,12 @@
 <ng-content></ng-content>
 Can you see me?
 </div> -->
+
+
 <div class="row">
 
   <div class = "column left" >
-
+<simple-notifications [options]="{position: ['center', 'left'], maxStack: 6}" (click)="openDialog()"></simple-notifications>
     <div id="toggle" (click)="openDiv()">Cén fáth / Why?
   <p [innerHTML]="myModel"></p>
 </div>
