@@ -14,7 +14,7 @@ export class SocketClass {
 
   init = (io, port) => {
     this.io = io;
-    this.io.on('connect', (socket:any) => {
+    this.io.on('connect', (socket: any) => {
 
       console.log('connected client on port %s.', port);
       socket.on('text', (text) => {
@@ -38,11 +38,8 @@ export class SocketClass {
   compareText = (socket) => {
     let text = this.text;
 
-  //  this.text = this.text.replace(/['"]+/g, '');
-  //  this.text = this.text.replace(/\\n/g, ' ');
-
     let tokenizer = this.text.split(' ');
-    //console.log(tokenizer);
+
     let returnMsg = '';
     let passIo = this.io;
     let arr = [];
@@ -50,64 +47,90 @@ export class SocketClass {
 
     let lastWord = getLastWord(tokenizer);
 
-    if(lastWord == '"'){
+    if (lastWord == '"') {
 
-      lastWord =  secondLastWord + ' ';
+      lastWord = secondLastWord + ' ';
     }
 
 
-      function getLastWord(words) {
+    function getLastWord(words) {
 
-        return words[words.length - 1];
-      }
-    this.noun.findOne({"default": lastWord}, (err, docs) => {
+      return words[words.length - 1];
+    }
+
+    lastWord = lastWord.toLowerCase();
+
+    this.noun.findOne({ "default": lastWord }, (err, docs) => {
       if (err) { return console.error(err); }
 
-    }).then(function(res){
+    }).then(function(res) {
 
-        if(res){
+      if (res) {
 
-          let myword = res["default"];
-          let gender = res["gender"];
+        let myword = res["default"];
+        let gender = res["gender"];
 
-          let regex = /\b[aeiouAEIOU]/g;
-          let removeFadas = cleanUpSpecialChars(myword);
-          let vowelCheck = regex.test(removeFadas);
+        let regex = /\b[aeiouAEIOU]/g;
+        let removeFadas = cleanUpSpecialChars(myword);
+        let vowelCheck = regex.test(removeFadas);
 
-          if(myword == lastWord && vowelCheck && gender == 'masc'){
+        if (myword == lastWord && vowelCheck && gender == 'masc') {
 
-            var thirdLastWord = tokenizer[tokenizer.length-3];
-             var checkthirdlastWord = thirdLastWord.replace(/['"]+/g, '');
-            if(thirdLastWord == 'an' || thirdLastWord == '"an' || checkthirdlastWord){
+          secondLastWord = cleanUpSpecialChars(secondLastWord);
 
-              tokenizer[tokenizer.length-2] = 't-' + tokenizer[tokenizer.length-2];
+          let checkForCapital = /^[A-Z]/.test(secondLastWord);
+
+          if (checkForCapital) {
+
+            var thirdLastWord = tokenizer[tokenizer.length - 3];
+            var checkthirdlastWord = thirdLastWord.replace(/['"]+/g, '');
+            if (thirdLastWord == 'an' || thirdLastWord == '"an' || thirdLastWord == '"An' || thirdLastWord == 'An') {
+
+              tokenizer[tokenizer.length - 2] = 't' + tokenizer[tokenizer.length - 2];
               returnMsg = tokenizer.pop();
-              returnMsg= tokenizer.join(' ');
+              returnMsg = tokenizer.join(' ');
               returnMsg = returnMsg.replace(/['"]+/g, '');
 
               returnMsg = returnMsg.substring(returnMsg.lastIndexOf(' '));
               returnMsg = returnMsg.substr(1);
 
               let rule = 'masc-noun-vowel';
-              let returnObj = {'text': returnMsg, 'rule': rule} ;
+              let returnObj = { 'text': returnMsg, 'rule': rule };
               socket.emit('returnmessage', returnObj);
+            }
+          } else {
 
+            var thirdLastWord = tokenizer[tokenizer.length - 3];
+            var checkthirdlastWord = thirdLastWord.replace(/['"]+/g, '');
+            if (thirdLastWord == 'an' || thirdLastWord == '"an' || thirdLastWord == '"An' || thirdLastWord == 'An') {
+
+              tokenizer[tokenizer.length - 2] = 't-' + tokenizer[tokenizer.length - 2];
+              returnMsg = tokenizer.pop();
+              returnMsg = tokenizer.join(' ');
+              returnMsg = returnMsg.replace(/['"]+/g, '');
+
+              returnMsg = returnMsg.substring(returnMsg.lastIndexOf(' '));
+              returnMsg = returnMsg.substr(1);
+
+              let rule = 'masc-noun-vowel';
+              let returnObj = { 'text': returnMsg, 'rule': rule };
+              socket.emit('returnmessage', returnObj);
 
             }
           }
         }
-
-      })
-      function cleanUpSpecialChars(str)
-      {
-          str = str.replace(/[Á]/g,"A");
-          str = str.replace(/[á]/g,"a");
-          str = str.replace(/[É]/g,"E");
-          str = str.replace(/[Ú]/g,"U");
-          str = str.replace(/[ú]/g,"u");
-          str = str.replace(/[ú]/g,"u");
-          return str;
       }
+
+    })
+    function cleanUpSpecialChars(str) {
+      str = str.replace(/[Á]/g, "A");
+      str = str.replace(/[á]/g, "a");
+      str = str.replace(/[É]/g, "E");
+      str = str.replace(/[Ú]/g, "U");
+      str = str.replace(/[ú]/g, "u");
+      str = str.replace(/[ú]/g, "u");
+      return str;
+    }
 
   }
 

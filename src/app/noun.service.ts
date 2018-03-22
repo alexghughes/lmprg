@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class NounService {
    //private json = JSON.stringify({var1: 'test'});
-  private headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+  private headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
   //private params = 'json=' + this.json;
   private options = new RequestOptions({ headers: this.headers });
   private nounsUrl = 'http://localhost:3000';
@@ -26,34 +26,30 @@ export class NounService {
 
   }
 
-//   send(noun: Nouns[]): Promise<Nouns[]> {
-//   const url = this.nounsUrl + '/api/send';
-//   return this.http
-//     .post(url, JSON.stringify(noun))
-//     .toPromise()
-//     .then(() => noun)
-//     .catch(this.handleError);
-// }
 
-send(noun): Observable<any> {
-  var params = 'json=' + noun;
-    return this.http.post('http://localhost:8080/api/send', params, {
+ send(noun): void{
+//
+//   var params = 'json=' + noun;
+//     return this.http.post('http://localhost:3000/api/send', params).map(res => res.json);
+//   }
+
+this.http.post('http://localhost:3000/api/send',
+     {'noun': noun},
+
+    {
       headers: this.headers
-    }).map(res => res.json);
-  }
+    })
+      .subscribe(
+        res => {
+          console.log(res);
+        },
+        err => {
+          console.log("Error occured");
+        }
+      );
+
+}
 
 
-
-
-//  getWords(): Promise<Nouns[]> {
-//    return Promise.resolve(NOUNS);
-//  } //method stub
-//
-//
-// getWord(word: string): Promise<Nouns> {
-//
-//   return this.getWords()
-//              .then(nouns => nouns.find(nouns => nouns.word === word));
-// }
 
 }

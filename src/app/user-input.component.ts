@@ -59,9 +59,9 @@ export class UserInputComponent implements OnInit {
   }
 
   sendIoMessage(): void {
-    var myWord = this.newword.slice(-1);
-
-    this.socketService.sendIoMessage(this.newword);
+    //var myWord = this.newword.slice(-1);
+    this.nounService.send(this.newword);
+    //this.socketService.sendIoMessage(this.newword);
 
   }
 
