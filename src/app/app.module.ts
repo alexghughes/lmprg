@@ -20,8 +20,8 @@ import { UserListComponent } from './user-list.component';
 import { UserComponent } from './user.component';
 import { DialogComponent } from './dialog.component';
 import { SimpleNotificationsModule } from 'angular2-notifications';
-
 import { ToastrModule } from 'ngx-toastr';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +30,8 @@ import { ToastrModule } from 'ngx-toastr';
     DashboardComponent,
     UserInputComponent,
     NounComponent,
-    DialogComponent
+    DialogComponent,
+
   ],
   imports: [
     BrowserModule,

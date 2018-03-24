@@ -21,7 +21,6 @@ Can you see me?
 
 
 <div class="row">
-
   <div class = "column left" >
 <simple-notifications [options]="{position: ['center', 'left'], maxStack: 6}" (click)="openDialog()"></simple-notifications>
     <div id="toggle" (click)="openDiv()">Cén fáth / Why?
@@ -43,10 +42,12 @@ Can you see me?
 
 
 </div>
+
 <div class="column right">
 <div class="container">
 
   <div class="backdrop">
+
     <div class="highlights"></div>
 
 </div>
@@ -54,5 +55,8 @@ Can you see me?
   <textarea spellcheck="false" id="txtarea" [(ngModel)]="newword" (ngModelChange)="sendIoMessage()" class="user-input"></textarea>
 
 </div>
+
 </div>
+
 </div>
+<div id="append">Why?</div>

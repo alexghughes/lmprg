@@ -9,7 +9,6 @@ export default class NounCtrl{
 
   getAll = (req, res) => {
     this.model.find({}, (err, docs) => {
-      console.log('hello');
       if (err) { return console.error(err); }
       res.json(docs);
     })
@@ -17,8 +16,11 @@ export default class NounCtrl{
 
   insert = (req, res) => {
     let text = req.body.noun;
+
     let returnMsg = '';
     let tokenizer = text.split(' ');
+
+    let returnObj = {};
 
     let secondLastWord = tokenizer[tokenizer.length - 2];
 
@@ -36,47 +38,78 @@ export default class NounCtrl{
 
       if(result){
 
-        let myword = res["default"];
-        let gender = res["gender"];
+        let dflt = result["default"];
+        let gender = result["gender"];
 
+
+        //regex that will test if word begins with a vowel
         let regex = /\b[aeiouAEIOU]/g;
-        //let removeFadas = cleanUpSpecialChars(myword);
-        let vowelCheck = regex.test(myword);
-        //result not equal to null
-        var thirdLastWord = tokenizer[tokenizer.length - 3];
-        var checkthirdlastWord = thirdLastWord.replace(/['"]+/g, '');
-        if (thirdLastWord == 'an' || thirdLastWord == '"an' || thirdLastWord == '"An' || thirdLastWord == 'An') {
+        //get rid of fadas so regex can see if first word is a vowel
+        let removeFadas = cleanUpSpecialChars(dflt);
+        //test word to see if it begins with a vowel
+        let vowelCheck = regex.test(dflt);
+           /*execute when found word matches last typed word,
+           starts with vowel, and gender of found word is male*/
+        if (dflt == lastWord && vowelCheck && gender === 'masc' ) {
 
-          tokenizer[tokenizer.length - 2] = 't-' + tokenizer[tokenizer.length - 2];
-          returnMsg = tokenizer.pop();
-          returnMsg = tokenizer.join(' ');
-          returnMsg = returnMsg.replace(/['"]+/g, '');
+          secondLastWord = cleanUpSpecialChars(secondLastWord);
 
-          returnMsg = returnMsg.substring(returnMsg.lastIndexOf(' '));
-          returnMsg = returnMsg.substr(1);
+          let checkForCapital = /^[A-Z]/.test(secondLastWord);
 
-          let rule = 'masc-noun-vowel';
-          let returnObj = { 'text': returnMsg, 'rule': rule };
-          console.log(returnMsg);
-        //  socket.emit('returnmessage', returnObj);
+          if(checkForCapital) {
+            var thirdLastWord = tokenizer[tokenizer.length - 3];
+            var checkthirdlastWord = thirdLastWord.replace(/['"]+/g, '');
+            if (thirdLastWord == 'an' || thirdLastWord == '"an' || thirdLastWord == '"An' || thirdLastWord == 'An') {
 
+              tokenizer[tokenizer.length - 2] = 't' + tokenizer[tokenizer.length - 2];
+              returnMsg = tokenizer.pop();
+              returnMsg = tokenizer.join(' ');
+              returnMsg = returnMsg.replace(/['"]+/g, '');
+
+              returnMsg = returnMsg.substring(returnMsg.lastIndexOf(' '));
+              returnMsg = returnMsg.substr(1);
+
+              let rule = 'masc-noun-vowel';
+              let returnObj = { 'text': returnMsg, 'rule': rule };
+              res.json(returnObj);
+            }
+          }else {
+            var thirdLastWord = tokenizer[tokenizer.length - 3];
+            var checkthirdlastWord = thirdLastWord.replace(/['"]+/g, '');
+            if (thirdLastWord == 'an'  || thirdLastWord == 'An') {
+
+              tokenizer[tokenizer.length - 2] = 't-' + tokenizer[tokenizer.length - 2];
+              returnMsg = tokenizer.pop();
+              returnMsg = tokenizer.join(' ');
+              returnMsg = returnMsg.replace(/['"]+/g, '');
+
+              returnMsg = returnMsg.substring(returnMsg.lastIndexOf(' '));
+              returnMsg = returnMsg.substr(1);
+
+              let rule = 'masc-noun-vowel';
+              let returnObj = { 'text': returnMsg, 'rule': rule };
+              //socket.emit('returnmessage', returnObj);
+              res.json(returnObj);
+            }
+          }
         }
-
-      res.json('okay');
 
     }else{
       //result is null
-      res.json('okay');
+      res.json('nothing');
     }
 
     })
 
     function cleanUpSpecialChars (str) {
+
       str = str.replace(/[Á]/g, "A");
       str = str.replace(/[á]/g, "a");
       str = str.replace(/[É]/g, "E");
+      str = str.replace(/[Í]/g, "I");
+      str = str.replace(/[í]/g, "i");
+      str = str.replace(/[Ó]/g, "O");
       str = str.replace(/[Ú]/g, "U");
-      str = str.replace(/[ú]/g, "u");
       str = str.replace(/[ú]/g, "u");
       return str;
     }

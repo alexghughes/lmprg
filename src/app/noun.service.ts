@@ -27,26 +27,30 @@ export class NounService {
   }
 
 
- send(noun): void{
-//
-//   var params = 'json=' + noun;
-//     return this.http.post('http://localhost:3000/api/send', params).map(res => res.json);
-//   }
+ send(noun:any): Observable<any>{
 
-this.http.post('http://localhost:3000/api/send',
+// this.http.post('http://localhost:3000/api/send',
+//      {'noun': noun},
+//
+//     {
+//       headers: this.headers
+//     })
+//       .subscribe(
+//         res => {
+//           console.log(res);
+//         },
+//         err => {
+//           console.log("Error occured");
+//         }
+//       );
+
+return this.http.post('http://localhost:3000/api/send',
      {'noun': noun},
 
     {
       headers: this.headers
     })
-      .subscribe(
-        res => {
-          console.log(res);
-        },
-        err => {
-          console.log("Error occured");
-        }
-      );
+      .map(res => res.json())
 
 }
 
