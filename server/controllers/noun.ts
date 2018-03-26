@@ -35,7 +35,6 @@ export default class NounCtrl{
     this.noun.findOne({"default": lastWord}, (err, docs) => {
       if (err) { return console.error(err); }
     }).then(function(result) {
-
       if(result){
 
         let dflt = result["default"];
@@ -46,10 +45,12 @@ export default class NounCtrl{
         let regex = /\b[aeiouAEIOU]/g;
         //get rid of fadas so regex can see if first word is a vowel
         let removeFadas = cleanUpSpecialChars(dflt);
+      //  console.log(removeFadas);
         //test word to see if it begins with a vowel
-        let vowelCheck = regex.test(dflt);
+        let vowelCheck = regex.test(removeFadas);
            /*execute when found word matches last typed word,
            starts with vowel, and gender of found word is male*/
+
         if (dflt == lastWord && vowelCheck && gender === 'masc' ) {
 
           secondLastWord = cleanUpSpecialChars(secondLastWord);
@@ -59,7 +60,7 @@ export default class NounCtrl{
           if(checkForCapital) {
             var thirdLastWord = tokenizer[tokenizer.length - 3];
             var checkthirdlastWord = thirdLastWord.replace(/['"]+/g, '');
-            if (thirdLastWord == 'an' || thirdLastWord == '"an' || thirdLastWord == '"An' || thirdLastWord == 'An') {
+            if (thirdLastWord == 'an' || thirdLastWord == 'An' || thirdLastWord == '\nan') {
 
               tokenizer[tokenizer.length - 2] = 't' + tokenizer[tokenizer.length - 2];
               returnMsg = tokenizer.pop();
@@ -76,7 +77,8 @@ export default class NounCtrl{
           }else {
             var thirdLastWord = tokenizer[tokenizer.length - 3];
             var checkthirdlastWord = thirdLastWord.replace(/['"]+/g, '');
-            if (thirdLastWord == 'an'  || thirdLastWord == 'An') {
+
+            if (thirdLastWord == 'an'  || thirdLastWord == 'An' || thirdLastWord == '\nan') {
 
               tokenizer[tokenizer.length - 2] = 't-' + tokenizer[tokenizer.length - 2];
               returnMsg = tokenizer.pop();
@@ -111,6 +113,7 @@ export default class NounCtrl{
       str = str.replace(/[Ó]/g, "O");
       str = str.replace(/[Ú]/g, "U");
       str = str.replace(/[ú]/g, "u");
+
       return str;
     }
 

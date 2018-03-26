@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard.component';
 import { NounService } from './noun.service';
 import { RulesService } from './rules.service';
+import { NojqueryComponent } from './nojquery.component'
 import { UserInputComponent }   from './user-input.component';
 import { RouterModule }   from '@angular/router';
 import { AppRoutingModule }     from './app-routing.module';
@@ -21,6 +22,7 @@ import { UserComponent } from './user.component';
 import { DialogComponent } from './dialog.component';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { ToastrModule } from 'ngx-toastr';
+import { FaderComponent } from './fader.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { ToastrModule } from 'ngx-toastr';
     UserInputComponent,
     NounComponent,
     DialogComponent,
+    NojqueryComponent,
+    FaderComponent
 
   ],
   imports: [

@@ -82,23 +82,20 @@ export class UserInputComponent implements OnInit {
     var $highlights = $('.highlights');
     var $toggle = $('#toggle');
 
-
-
     this.myModel = '';
 
     if(data.text === 'okay' || data.text === undefined){
       //do nothing
     }else{
 
-      const toast = this.notificationsService.info(data.rule, 'Click to undo...', {
-
-      timeOut: 5000,
-      showProgressBar: true,
-      pauseOnHover: true,
-      clickToClose: true,
-      maxStack: 4
-    });
-
+    //   const toast = this.notificationsService.info(data.rule, 'Click to undo...', {
+    //
+    //   timeOut: 5000,
+    //   showProgressBar: true,
+    //   pauseOnHover: true,
+    //   clickToClose: true,
+    //   maxStack: 4
+    // });
 
 
           this.panelValue = true;

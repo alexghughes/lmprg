@@ -96,7 +96,7 @@ textarea {
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   -ms-overflow-style: none;
-  border-radius: 8px;
+  border-radius: 4px;
   color: #444;
   text-align: justify;
   background-color: transparent;
