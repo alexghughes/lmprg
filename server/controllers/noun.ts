@@ -77,8 +77,9 @@ export default class NounCtrl{
           }else {
             var thirdLastWord = tokenizer[tokenizer.length - 3];
             var checkthirdlastWord = thirdLastWord.replace(/['"]+/g, '');
+            var stripLineBreaks = thirdLastWord.replace(/(?:\r\n|\r|\n)/g, '');
 
-            if (thirdLastWord == 'an'  || thirdLastWord == 'An' || thirdLastWord == '\nan') {
+            if (thirdLastWord == 'an'  || thirdLastWord == 'An' || stripLineBreaks == 'an') {
 
               tokenizer[tokenizer.length - 2] = 't-' + tokenizer[tokenizer.length - 2];
               returnMsg = tokenizer.pop();

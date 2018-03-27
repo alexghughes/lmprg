@@ -8,6 +8,6 @@
     </my-fader>
   </div>
 
-  <textarea id="txtarea" #txtarea [(ngModel)]="text" (ngModelChange)="sendMessage()" class="user-input"></textarea>
+  <textarea id="txtarea" (keydown)="onKeydown($event)" [(ngModel)]="text" (ngModelChange)="sendMessage($)" class="user-input"></textarea>
 
 </div>
