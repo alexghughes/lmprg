@@ -26,7 +26,7 @@ nav a.active {
   color: #039be5;
 }
 
-md-toolbar {
+mat-toolbar {
   background-color: #03A9F4;
   height:64px;
 

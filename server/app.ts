@@ -67,7 +67,7 @@ class Server {
   private mongoConnect(): void {
     this.dotenv = dotenv;
     this.dotenv.load({ path: '.env' });
-    mongoose.connect(process.env.MONGODB_URI);
+    mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
     const db = mongoose.connection;
     (<any>mongoose).Promise = global.Promise;
     db.on('error', console.error.bind(console, 'connection error:'));

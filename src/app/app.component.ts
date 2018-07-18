@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import {MatSpinner} from '@angular/material';
-
+// <span><img src="./assets/lamprog3.png" alt="Lampróg" height="200" width="250"></span>
+//
 @Component({
   selector: 'my-app',
   template: `
 
-  <md-toolbar>
-  <span><img src="./assets/lamprog3.png" alt="Lampróg" height="200" width="250"></span>
+  <mat-toolbar>
   <div id='myRoutes'>
   <span><a routerLink="/dashboard"><img class="router-links" src="./assets/ic_account_circle_black_48px.svg" alt="Lampróg" height="30" width="30"></a></span>
   <span><a routerLink="/input"><img class="router-links" src="./assets/ic_assignment_black_48px.svg" alt="Lampróg" height="30" width="30"></a></span>
@@ -17,7 +16,7 @@ import {MatSpinner} from '@angular/material';
 
   <!-- This fills the remaining space of the current row -->
 
-</md-toolbar>
+</mat-toolbar>
 
    <router-outlet></router-outlet>
 

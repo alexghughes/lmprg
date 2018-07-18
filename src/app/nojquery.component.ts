@@ -1,5 +1,11 @@
-import { Component, AfterViewInit, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, Renderer2, ViewChild, OnInit, OnChanges } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { NounService } from './noun.service';
+import { interval } from 'rxjs/observable/interval';
+import * as Rx from "rxjs";
+import { timer } from 'rxjs/observable/timer';
+import { Subscription } from 'rxjs/Subscription';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'nojquery-component',
@@ -8,18 +14,29 @@ import { NounService } from './noun.service';
 
 })
 
-export class NojqueryComponent implements AfterViewInit {
+export class NojqueryComponent implements OnInit {
 
   text: string;
   highlightText: any;
   isVisible: boolean = false;
+  public top: Number;
+  public left: Number;
+  public display: string;
+  count:number;
+  tooltipsource:Subscription;
+  public queue = [];
+  subscription: Subscription;
+  constructor(private nounService: NounService, private rd: Renderer2, private sanitized: DomSanitizer) { }
 
 
-  constructor(private nounService: NounService, private rd: Renderer2) { }
+  ngOnInit() {
 
-  ngAfterViewInit() {
+ //const source = interval(1000);
+ //const example = source.subscribe(t=>  console.log(t));
+ //const example2 = example.pipe(takeUntil(this.timer));
+  //let timer = Observable.timer(2000,1000);
+  }
 
-}
 
   sendMessage(event): void {
 
@@ -31,13 +48,21 @@ export class NojqueryComponent implements AfterViewInit {
   onKeydown(event) {
     if (event.key === "Backspace") {
         this.highlightText = '';
+        this.display = "none";
     }
   }
 
   getResponse(data): void {
-
+    if(this.subscription !== undefined){
+    if(this.subscription.closed === false){
+      this.subscription.unsubscribe();
+    }
+  }
     if (data.text !== 'okay' && data.text !== undefined) {
 
+      this.count = 0;
+
+      this.display = 'none';
       let changedWord = data.text;
 
       this.text = this.text.slice(0, -1);
@@ -61,23 +86,34 @@ export class NojqueryComponent implements AfterViewInit {
       let highlights = <HTMLInputElement>document.getElementById('highlights');
       let backSpaceEvent = false;
       let revMark = reverse('<mark id="marky" style="background-color:#FBFF2C; border-radius: 8px; ">&$</mark>');
-
+      this.sanitized.bypassSecurityTrustHtml(this.highlightText);
       this.highlightText = applyHighlights(this.text, changedWord, revMark);
+
       this.isVisible = true;
       let marky = <HTMLInputElement>document.getElementById('marky');
-      returnMarkElement();
-      setTimeout(() => {
+      this.getMarkElementRect();
+
+
+  let sourcething = Rx.Observable.timer(
+    1000, /* 5 seconds */
+    1000 /* 1 second */)
+     .timestamp();
+
+      let y = 0;
+  this.subscription = sourcething.subscribe(x=>
+  {
+
+
+      if(x.value == 0){
         this.isVisible = false;
+      }
 
-      }, 1000);
+      if(x.value == 4){
+        this.display = "none";
 
-
-      // console.log(myMark);
-
-      setTimeout(function(){
-        var marky = document.getElementById('marky');
-        console.log(marky);
-      })
+        this.subscription.unsubscribe();
+      }
+    });
 
     }
 
@@ -105,13 +141,31 @@ export class NojqueryComponent implements AfterViewInit {
     }
 
     function returnMarkElement(){
-setTimeout(function(){
-  var mymark = document.getElementsByTagName('MARK');
-  var markRect = mymark[0].getBoundingClientRect();
-  console.log(markRect);
-},2000)
+
 
     }
   }
+
+
+  getMarkElementRect(): void {
+    setTimeout( () => {
+      let mymark = document.getElementsByTagName('MARK');
+      let markRect = mymark[0].getBoundingClientRect();
+
+      let bodyRect = document.body.getBoundingClientRect();
+
+      let myoffsettop = markRect.top - bodyRect.top;
+      let myoffsetleft = markRect.left - bodyRect.left;
+      myoffsettop = myoffsettop - 40;
+      this.top = myoffsettop;
+      this.left = myoffsetleft;
+      this.display = "block";
+
+    })
+
+
+  }
+
+
 
 }

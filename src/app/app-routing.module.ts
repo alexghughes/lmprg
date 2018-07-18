@@ -2,16 +2,15 @@ import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardComponent }   from './dashboard.component';
-
-import { UserInputComponent }  from './user-input.component';
 import { NounComponent }  from './noun.component';
 import { NojqueryComponent } from './nojquery.component';
+import { RegisterComponent } from './register.component';
 const routes: Routes = [
-  { path: '', redirectTo: '/input', pathMatch: 'full' },
+  { path: '', redirectTo: '/nojquery', pathMatch: 'full' },
   { path: 'dashboard',  component: DashboardComponent },
-  { path: 'input',     component: UserInputComponent },
   { path: 'nouns',     component: NounComponent },
-  { path: 'nojquery', component: NojqueryComponent}
+  { path: 'nojquery', component: NojqueryComponent},
+  { path: 'register', component: RegisterComponent}
 ];
 
 @NgModule({

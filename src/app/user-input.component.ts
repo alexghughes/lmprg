@@ -4,14 +4,7 @@ import { Http } from '@angular/http';
 import { NounService } from './noun.service';
 import { RulesService } from './rules.service';
 import { SocketService } from './socket.service';
-import { keyframes } from '@angular/animations';
-import {MatExpansionModule} from '@angular/material';
-import {MdDialog, MdDialogRef} from '@angular/material';
-import {MatTooltipModule} from '@angular/material';
-import { DialogComponent } from './dialog.component';
-import { slideInOutAnimation } from './_animations/index';
-import { ToastrService } from 'ngx-toastr';
-import { NotificationsService } from 'angular2-notifications';
+
 import { ElementRef } from '@angular/core';
 
 import $ from 'jquery';
@@ -36,7 +29,7 @@ export class UserInputComponent implements OnInit {
   showappend:boolean = false;
   private ioConnection: any;
 
-  constructor(private nounService: NounService, private http: Http, private socketService: SocketService, private rulesService: RulesService, private toastr: ToastrService, private notificationsService: NotificationsService, public dialog: MdDialog) { }
+  constructor(private nounService: NounService, private http: Http, private socketService: SocketService, private rulesService: RulesService) { }
 
   ngOnInit(): void {
     // this.panelValue = true;
@@ -51,10 +44,10 @@ export class UserInputComponent implements OnInit {
 
 
   openDialog(): void {
-    let dialogRef = this.dialog.open(DialogComponent);
-   dialogRef.afterClosed().subscribe(result => {
-    // this.selectedOption = result;
-   });
+   //  let dialogRef = this.dialog.open(DialogComponent);
+   // dialogRef.afterClosed().subscribe(result => {
+   //  // this.selectedOption = result;
+   // });
   }
 
   sendIoMessage(): void {
@@ -69,7 +62,7 @@ export class UserInputComponent implements OnInit {
   openDiv(): void {
     let newRule = '';
     this.rulesService.getRule(this.rule).subscribe(
-      data =>  this.toastr.success('Hello world!', 'Toastr fun!'),
+    //  data =>  this.toastr.success('Hello world!', 'Toastr fun!'),
 
       //this.myModel = data.text,
       error => console.log(error)

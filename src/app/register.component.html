@@ -1,0 +1,88 @@
+
+  <h3>Register</h3>
+  <form name="form" class="register-form" [formGroup]="myForm" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate>
+<div class="form-group">
+
+    <!-- <mat-form-field class="register-full-width">
+      <input mdInput placedholder="Email" >
+      <mat-error >
+        Please enter a valid email address
+      </mat-error>
+      <mat-error >
+        Email is required
+      </mat-error>
+    </mat-form-field> -->
+
+<div layout="column">
+<div layout="row" >
+    <mat-form-field appearance="outline">
+    <input matInput color="primary" placeholder="username" name="username" [(ngModel)]="model.username" formControlName="username" required>
+    <mat-error>
+      Please enter a username
+    </mat-error>
+  </mat-form-field>
+</div>
+
+<div layout="row" >
+    <mat-form-field appearance="outline">
+    <input matInput color="primary" placeholder="email" name="email" [(ngModel)]="model.email" formControlName="email" required>
+    <!-- <mat-error *ngIf="f.submitted && emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      Email is required
+    </mat-error> -->
+
+  </mat-form-field>
+</div>
+
+<div>
+<div layout="row">
+<mat-form-field appearance="outline">
+      <input matInput color="primary"  placeholder="password" name="password" [(ngModel)]="model.password" formControlName="password" required>
+</mat-form-field>
+</div>
+
+<div layout="row">
+<mat-form-field appearance="outline">
+      <input matInput color="primary"  placeholder="confirmPassword" name="confirmPassword" [(ngModel)]="model.confirmPassword" formControlName="confirmPassword"  required>
+</mat-form-field>
+<mat-error *ngIf="myForm.controls.confirmPassword.errors?.MatchPassword">
+  Passwords do not match
+</mat-error>
+</div>
+</div>
+
+</div>
+   <!-- <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid}">
+      <label for="firstname">First Name</label>
+      <input type="text" class="form-control" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" required />
+    </div>
+
+    <div class="form-group" [ngClass]="{ 'has-error: f.submitted && !password.valid' }">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required/>
+      <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
+    </div>
+
+
+
+     <div class="form-group">
+      <label for="firstname">First Name</label>
+      <input type="text" class="form-control" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" required />
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required/>
+      <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
+    </div> -->
+
+
+      <button mat-raised-button color="primary" [disabled]="!f.form.valid" >Register</button>
+      <a [routerLink]="['/dashboard']" class="btn btn-link">Cancel</a>
+
+
+
+    </div>
+  </form>
