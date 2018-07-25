@@ -26,4 +26,5 @@ export default function setRoutes(app) {
   app.route('/api/rules/:name').get(ruleCtrl.getRule);
 
   app.route('/api/users/register').post(userCtrl.register);
+  app.route('/api/users/authenticate').post(userCtrl.authenticate);
 }

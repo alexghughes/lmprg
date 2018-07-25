@@ -5,6 +5,7 @@ import 'hammerjs';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AngularMaterialModule} from './angular-material.module';
 import { AppComponent } from './app.component';
@@ -19,10 +20,14 @@ import { NounComponent }     from './noun.component';
 import { SocketService } from './socket.service';
 import { UserService } from './user.service';
 import { FaderComponent } from './fader.component';
+import { JwtInterceptorProvider } from './_helpers/jwt.interceptor';
+import { ErrorInterceptorProvider } from './_helpers/error.interceptor';
 
 import { GrowerComponent } from './grower.component';
 
 import { RegisterComponent } from './register.component';
+import { LoginComponent } from './login.component';
+import { AuthGuard } from './_guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -32,7 +37,8 @@ import { RegisterComponent } from './register.component';
     NojqueryComponent,
     FaderComponent,
     GrowerComponent,
-    RegisterComponent
+    RegisterComponent,
+    LoginComponent
 
   ],
   imports: [
@@ -47,7 +53,16 @@ import { RegisterComponent } from './register.component';
   entryComponents: [
 
   ],
-  providers: [NounService, RulesService, SocketService, UserService],
+  providers: [
+    NounService,
+    RulesService,
+    SocketService,
+    AuthGuard,
+    UserService,
+    JwtInterceptorProvider,
+    ErrorInterceptorProvider
+  ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

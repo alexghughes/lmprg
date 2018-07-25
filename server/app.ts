@@ -7,6 +7,7 @@ import * as mongodb from 'mongodb';
 import * as mongoose from 'mongoose';
 import * as path from 'path';
 import * as socketIo from 'socket.io';
+import * as expressJwt from 'express-jwt';
 
 import setRoutes from './routes';
 
@@ -16,13 +17,13 @@ import { SocketClass } from './controllers';
 
 class Server {
 
-  public static readonly PORT = 3000;
+  public static readonly PORT = '3000';
   public app: any;
   public routes: any;
   private server: any;
   private io: any;
   private dotenv: any;
-  private port: number;
+  private port: string;
 
 
   public static bootstrap(): Server {
@@ -56,6 +57,20 @@ class Server {
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(morgan('dev'));
+
+    this.app.use(expressJwt({
+    secret: 'tameagdeaneamhgomaith',
+    getToken: function (req) {
+
+        if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+            return req.headers.authorization.split(' ')[1];
+        } else if (req.query && req.query.token) {
+            return req.query.token;
+        }
+        return null;
+    }
+  }).unless({ path: ['/api/users/authenticate', '/api/users/register'] }));
+
 
   }
 

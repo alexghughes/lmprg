@@ -4,6 +4,7 @@ import {UserService} from './user.service';
 import {FormControl, FormGroup, FormBuilder, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {AbstractControl} from '@angular/forms';
+
 @Component({
   moduleId: module.id,
   templateUrl: 'register.component.html',
